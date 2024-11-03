@@ -31,7 +31,7 @@
     <input type="text" id="userInput" placeholder="Your answer here" />
     <button id="submitBtn">Submit</button>
     <p id="result" class="result"></p>
-    <p id="score">Score: 0</p> <!-- Score display -->
+    <p id="streak">Current Streak: 0</p> <!-- Streak display -->
 
     <script>
         const lyrics = [
@@ -41,7 +41,7 @@
             // Add more lyrics here
         ];
 
-        let score = 0; // Initialize score
+        let streak = 0; // Initialize streak
 
         function getRandomLyric() {
             const randomLyric = lyrics[Math.floor(Math.random() * lyrics.length)];
@@ -58,13 +58,14 @@
             if (userInput === correctAnswer) {
                 resultElement.innerText = "Correct!";
                 resultElement.className = "result correct";
-                score++; // Increment score
+                streak++; // Increment streak
             } else {
                 resultElement.innerText = `Wrong! The correct answer is: ${correctAnswer}`;
                 resultElement.className = "result wrong";
+                streak = 0; // Reset streak on wrong answer
             }
             document.getElementById('userInput').value = ""; // Clear input
-            document.getElementById('score').innerText = `Score: ${score}`; // Update score display
+            document.getElementById('streak').innerText = `Current Streak: ${streak}`; // Update streak display
 
             // Load a new lyric after a short delay
             setTimeout(getRandomLyric, 2000); // 2 seconds delay
