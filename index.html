@@ -60,7 +60,9 @@
                 resultElement.className = "result wrong";
             }
             document.getElementById('userInput').value = ""; // Clear input
-            getRandomLyric(); // Load a new lyric
+
+            // Load a new lyric after a short delay
+            setTimeout(getRandomLyric, 2000); // 2 seconds delay
         }
 
         document.getElementById('submitBtn').addEventListener('click', checkAnswer);
