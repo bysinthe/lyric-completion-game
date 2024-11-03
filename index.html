@@ -28,6 +28,7 @@
 <body>
     <h1>Complete the Lyric!</h1>
     <p id="lyric"></p>
+    <p id="clue"></p> <!-- Add this line for the clue -->
     <input type="text" id="userInput" placeholder="Your answer here" />
     <button id="submitBtn">Submit</button>
     <p id="result" class="result"></p>
@@ -101,6 +102,9 @@
             const randomLyric = lyrics[Math.floor(Math.random() * lyrics.length)];
             document.getElementById('lyric').innerText = randomLyric.incomplete;
             document.getElementById('lyric').dataset.answer = randomLyric.answer.toLowerCase();
+            
+            const answerWords = randomLyric.answer.split(' ').length;
+            document.getElementById('clue').innertText = `Clue: The answer contains ${answerWords} word${answerWords > 1 ? 's' : ''}.`;
             document.getElementById('result').innerText = ""; // Clear previous result
         }
 
