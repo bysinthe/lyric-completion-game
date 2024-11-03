@@ -5,16 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lyric Completion Game</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; margin: 50px; }
-        input { margin-top: 20px; }
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        input {
+            margin-top: 20px;
+        }
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .correct {
+            color: green;
+        }
+        .wrong {
+            color: red;
+        }
     </style>
 </head>
 <body>
     <h1>Complete the Lyric!</h1>
     <p id="lyric"></p>
     <input type="text" id="userInput" placeholder="Your answer here" />
-    <button onclick="checkAnswer()">Submit</button>
-    <p id="result"></p>
+    <button id="submitBtn">Submit</button>
+    <p id="result" class="result"></p>
 
     <script>
         const lyrics = [
@@ -28,15 +44,25 @@
             const randomLyric = lyrics[Math.floor(Math.random() * lyrics.length)];
             document.getElementById('lyric').innerText = randomLyric.incomplete;
             document.getElementById('lyric').dataset.answer = randomLyric.answer.toLowerCase();
+            document.getElementById('result').innerText = ""; // Clear previous result
         }
 
         function checkAnswer() {
             const userInput = document.getElementById('userInput').value.toLowerCase();
             const correctAnswer = document.getElementById('lyric').dataset.answer;
-            const resultText = userInput === correctAnswer ? "Correct!" : `Wrong! The correct answer is: ${correctAnswer}`;
-            document.getElementById('result').innerText = resultText;
+            const resultElement = document.getElementById('result');
+            
+            if (userInput === correctAnswer) {
+                resultElement.innerText = "Correct!";
+                resultElement.className = "result correct";
+            } else {
+                resultElement.innerText = `Wrong! The correct answer is: ${correctAnswer}`;
+                resultElement.className = "result wrong";
+            }
+            document.getElementById('userInput').value = ""; // Clear input
         }
 
+        document.getElementById('submitBtn').addEventListener('click', checkAnswer);
         window.onload = getRandomLyric;
     </script>
 </body>
