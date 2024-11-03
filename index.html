@@ -60,9 +60,16 @@
                 resultElement.className = "result wrong";
             }
             document.getElementById('userInput').value = ""; // Clear input
+            getRandomLyric(); // Load a new lyric
         }
 
         document.getElementById('submitBtn').addEventListener('click', checkAnswer);
+        document.getElementById('userInput').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                checkAnswer(); // Call checkAnswer on Enter key press
+            }
+        });
+
         window.onload = getRandomLyric;
     </script>
 </body>
