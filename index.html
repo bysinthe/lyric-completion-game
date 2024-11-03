@@ -104,7 +104,7 @@
             document.getElementById('lyric').dataset.answer = randomLyric.answer.toLowerCase();
             
             const answerWords = randomLyric.answer.split(' ').length;
-            document.getElementById('clue').innertText = `Clue: The answer contains ${answerWords} word${answerWords > 1 ? 's' : ''}.`;
+            document.getElementById('clue').innerText = `Clue: The answer contains ${answerWords} word${answerWords > 1 ? 's' : ''}.`;
             document.getElementById('result').innerText = ""; // Clear previous result
         }
 
