@@ -10,8 +10,19 @@
             text-align: center;
             margin: 50px;
         }
+        input, button {
+            padding: 10px;
+            font-size: 1em;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+        }
         input {
             margin-top: 20px;
+        }
+        button:disabled {
+            background-color: #f2f2f2;
+            cursor: not-allowed;
         }
         .result {
             margin-top: 20px;
@@ -23,23 +34,28 @@
         .wrong {
             color: red;
         }
+        #clue {
+            margin-top: 10px;
+            font-style: italic;
+            color: #555;
+        }
+        #streak {
+            font-size: 1.2em;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
     <h1>Complete the Lyric!</h1>
     <p id="lyric"></p>
-    <p id="clue"></p> <!-- Add this line for the clue -->
+    <p id="clue"></p>
     <input type="text" id="userInput" placeholder="Your answer here" />
     <button id="submitBtn">Submit</button>
     <p id="result" class="result"></p>
-    <p id="streak">Current Streak: 0</p> <!-- Streak display -->
+    <p id="streak">Current Streak: 0</p>
 
     <script>
         const lyrics = [
-
-            { incomplete: "Is this the real life? Is this just ___?", answer: "fantasy" },
-            { incomplete: "We don't need no education. We don't need no ___!", answer: "thought control" },
-            { incomplete: "Hey Jude, don't make it ___.", answer: "bad" },
             { incomplete: "Is this the real life? Is this just ___?", answer: "fantasy" },
             { incomplete: "We don't need no education. We don't need no ___!", answer: "thought control" },
             { incomplete: "Hey Jude, don't make it ___.", answer: "bad" },
@@ -89,24 +105,24 @@
             { incomplete: "Cause you make me feel like I'm living a ___.", answer: "teenage dream" },
             { incomplete: "Ain't nobody gonna turn me around, ain't nobody gonna turn me ___.", answer: "around" },
             { incomplete: "Just a touch of love, I need a ___.", answer: "touch" },
-            { incomplete: "Don't go breaking my ___.", answer: "heart" },
-            // Add more lyrics here
+            { incomplete: "Don't go breaking my ___.", answer: "heart" }
         ];
 
-        let streak = 0; // Initialize streak
+        let streak = 0;
 
         function getRandomLyric() {
             const randomLyric = lyrics[Math.floor(Math.random() * lyrics.length)];
             document.getElementById('lyric').innerText = randomLyric.incomplete;
             document.getElementById('lyric').dataset.answer = randomLyric.answer.toLowerCase();
-            
+
             const answerWords = randomLyric.answer.split(' ').length;
             document.getElementById('clue').innerText = `Clue: The answer contains ${answerWords} word${answerWords > 1 ? 's' : ''}.`;
-            document.getElementById('result').innerText = ""; // Clear previous result
+            document.getElementById('result').innerText = "";
+            document.getElementById('submitBtn').disabled = false; // Enable the button when the lyric is displayed
         }
 
         function checkAnswer() {
-            const userInput = document.getElementById('userInput').value.toLowerCase();
+            const userInput = document.getElementById('userInput').value.trim().toLowerCase();
             const correctAnswer = document.getElementById('lyric').dataset.answer;
             const resultElement = document.getElementById('result');
             
@@ -119,17 +135,18 @@
                 resultElement.className = "result wrong";
                 streak = 0; // Reset streak on wrong answer
             }
-            document.getElementById('userInput').value = ""; // Clear input
-            document.getElementById('streak').innerText = `Current Streak: ${streak}`; // Update streak display
 
-            // Load a new lyric after a short delay
-            setTimeout(getRandomLyric, 2000); // 2 seconds delay
+            document.getElementById('userInput').value = "";
+            document.getElementById('streak').innerText = `Current Streak: ${streak}`;
+            document.getElementById('submitBtn').disabled = true; // Disable submit until next lyric
+
+            setTimeout(getRandomLyric, 2000); // Load new lyric after a delay
         }
 
         document.getElementById('submitBtn').addEventListener('click', checkAnswer);
         document.getElementById('userInput').addEventListener('keypress', function(event) {
             if (event.key === 'Enter') {
-                checkAnswer(); // Call checkAnswer on Enter key press
+                checkAnswer();
             }
         });
 
